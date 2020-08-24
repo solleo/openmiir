@@ -1,4 +1,8 @@
 __author__ = 'sgkim'
+'''
+UPDATE:
+2020-08-24: some participants (P11, P13, ...) have 2 additional EOG channels with inaccurate setting (KIND=2 "EEG"), which caused an error while interpolating bad channels. The data info was modified so that it could run.
+'''
 
 import sys, os
 from mne.preprocessing import read_ica
@@ -38,7 +42,7 @@ print(raw.info)
 ch_kinds = [raw.info['chs'][i]['kind'] for i in range(len(raw.info['chs']))]
 if ch_kinds.count(2) > 64:   # too many eeg(kind=2) channels!
     print(F"__WARNING__ Too many {ch_kinds.count(2)} 'eeg' channles are found! (should be 64). Manually correcting them.")
-    raw.info['chs'][68]['kind'] = 202
+    raw.info['chs'][68]['kind'] = 202  # 2=EEG, 202=EOG
     raw.info['chs'][69]['kind'] = 202
 
 ## Now, let's redo the pipeline:
