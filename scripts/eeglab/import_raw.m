@@ -1,7 +1,8 @@
+function import_raw(subject)
 importPath = './';
 outputPath = './';
 
-subject = 'P01';
+
 rawdataFilename = fullfile(importPath, [subject '-eegdata.mat']);
 eventsFilename = fullfile(importPath, [subject '-events.mat']); 
 srate = 512.0;
@@ -9,8 +10,9 @@ srate = 512.0;
 %% import raw data - does not work
 eeglab
 fprintf('\nImporting raw data from %s...\n', rawdataFilename)
-% EEG = pop_importegimat(rawdataFilename, srate, 0, 'data'); % this does not work here, but in the GUI
-EEG = pop_importegimat(); % use the GUI so select the file and set the sample rate
+% 
+EEG = pop_importegimat(rawdataFilename, srate, 0, 'data'); % this does not work here, but in the GUI
+% EEG = pop_importegimat(); % use the GUI so select the file and set the sample rate
 EEG.setname = [subject '_imported'];
 EEG = eeg_checkset( EEG );
 
@@ -41,3 +43,4 @@ EEG = eeg_checkset( EEG );
 
 %% update GUI
 eeglab redraw
+end

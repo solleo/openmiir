@@ -28,11 +28,11 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    print 'loading raw data from ', args.fif_filepath
+    print ('loading raw data from ', args.fif_filepath)
     raw = mne.io.Raw(args.fif_filepath, preload=True, verbose=True)
     data, time = raw[:,:]
 
-    print 'saving raw data to', args.eeg_filepath
+    print ('saving raw data to', args.eeg_filepath)
     io.savemat(args.eeg_filepath, dict(data=data), oned_as='row')
 
     events = mne.find_events(raw, stim_channel='STI 014', shortest_event=0)
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     eeglab_events = [[event[2], event[0], 0] for event in events]
     eeglab_events = np.asarray(eeglab_events, dtype=int)
     
-    print 'saving events to', args.events_filepath
+    print ('saving events to', args.events_filepath)
     io.savemat(args.events_filepath, dict(data=eeglab_events), oned_as='row')
 
     
